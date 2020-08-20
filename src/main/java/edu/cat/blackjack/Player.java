@@ -47,16 +47,20 @@ public class Player {
      *
      * @param deck deck to draw from
      * @param high current high value, only matters to dealer
-     * @return total value of hand
+     * @return total value of hand or -1 if ran out of cards
      */
     public int takeTurn(Deck deck, int high) {
         if (dealer) {
             while (getTotal() < high && getTotal() != 21) {
-                draw(deck);
+                if (!draw(deck)) {
+                    return -1;
+                }
             }
         } else {
             while (getTotal() < 16) {
-                draw(deck);
+                if (!draw(deck)) {
+                    return -1;
+                }
             }
         }
         return getTotal();

@@ -70,10 +70,7 @@ public class Blackjack {
      * @return false if not enough cards available
      */
     public boolean dealHand() {
-        if (deck.getCards().size() < players.size() * CARDS_PER_HAND) {
-            return false;
-        }
-        for (int cards = 0; cards < 2; cards++) {
+        for (int cards = 0; cards < CARDS_PER_HAND; cards++) {
             for (Player p : players) {
                 if (!p.draw(deck)) {
                     return false;
@@ -94,10 +91,15 @@ public class Blackjack {
         int v, high = 0;
         for (Player p : players) {
             v = p.takeTurn(deck, high);
-            if (v <= 21 && v > high) {
+            if (v == -1) {
+                //we ran out of cards
+                return null;
+            } else if (v <= 21 && v > high) {
+                //new high hand
                 high = v;
                 winner = p;
             } else if (v == high && p.dealer) {
+                //dealer matches high hand
                 return null;
             }
 
