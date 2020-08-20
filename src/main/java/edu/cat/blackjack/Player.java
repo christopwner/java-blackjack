@@ -75,7 +75,11 @@ public class Player {
      */
     public boolean draw(Deck deck) {
         Card c = deck.draw();
-        return (c == null || cards.add(c));
+        if (c != null) {
+            return cards.add(c);
+        } else {
+            return false;
+        }
     }
 
     public void clearHand() {
